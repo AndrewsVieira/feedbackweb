@@ -23,7 +23,8 @@ const FeedBackForm = () => {
       >
         <Form.Item label="Tipo de feedback">
           <Select>
-            <Select.Option value="Normal">Normal</Select.Option>
+            <Select.Option value="1">Normal</Select.Option>
+            <Select.Option value="2">Contexto - Situação - Melhoria</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Feedback">
