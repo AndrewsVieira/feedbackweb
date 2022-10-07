@@ -1,10 +1,10 @@
 import './App.css';
 import './components/FeedBackForm'
 import React from 'react';
-import FeedBackForm from './components/FeedBackForm';
+import FeedBackGrid from './components/FeedBackGrid';
 
 const App = () => (
-  <FeedBackForm/>
+  <FeedBackGrid/>
 );
 
 export default App;
