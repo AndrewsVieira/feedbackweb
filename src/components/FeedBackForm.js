@@ -7,9 +7,13 @@ import {
 } from 'antd';
 const { TextArea } = Input;
 
-const onSave = (value) => console.log(value);
-
 const FeedBackForm = () => {
+
+  const [id, setId] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [type, setType] = useState(null);
+  const [user_name, setUserName] = useState(null);
+
   return (
     <>
       <Form
@@ -21,17 +25,23 @@ const FeedBackForm = () => {
         }}
         layout="vertical"
       >
+        <Form.Item label="Id">
+          <Input onChange={e => setId(e.target.value)} />
+        </Form.Item>
+        <Form.Item label="Feedback">
+          <TextArea rows={4} onChange={e => setDescription(e.target.value)}/>
+        </Form.Item>
         <Form.Item label="Tipo de feedback">
-          <Select>
+          <Select onChange={e => setType(e)}>
             <Select.Option value="1">Normal</Select.Option>
             <Select.Option value="2">Contexto - Situação - Melhoria</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Feedback">
-          <TextArea rows={4} />
+        <Form.Item label="Quem receberá o feedback">
+          <Input onChange={e => setUserName(e.target.value)} />
         </Form.Item>
         <Form.Item>
-          <Button onSave = {onSave(this)}>Enviar</Button>
+          <Button onSubmit = {console.log(id, description, type, user_name)}>Enviar</Button>
         </Form.Item>
       </Form>
     </>
