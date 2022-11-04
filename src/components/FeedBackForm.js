@@ -5,14 +5,45 @@ import {
   Button,
   Select,
 } from 'antd';
+import api from '../services/api';
 const { TextArea } = Input;
 
 const FeedBackForm = () => {
 
-  const [id, setId] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [type, setType] = useState(null);
-  const [user_name, setUserName] = useState(null);
+  const saveFeedback = () => {
+    if(id == null || description == null || type == null || user_name == null) {
+      alert('Todos os campos são obrigatórios')
+      return
+    }
+    
+    let body = {
+      'id': id,
+      'description': description,
+      'type': type,
+      'user_name': user_name
+    }
+
+    console.log(JSON.stringify(body))
+    
+    api
+      .post("/feedback", {
+        id: id,
+        description: description,
+        type: type,
+        user_name: user_name
+      })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
+  }
+
+  const [id, setId] = useState('teste');
+  const [description, setDescription] = useState('teste description');
+  const [type, setType] = useState("1");
+  const [user_name, setUserName] = useState('Chapolin Colorado');
 
   return (
     <>
@@ -26,22 +57,22 @@ const FeedBackForm = () => {
         layout="vertical"
       >
         <Form.Item label="Id">
-          <Input onChange={e => setId(e.target.value)} />
+          <Input onChange={e => setId(e.target.value)} value={id} />
         </Form.Item>
         <Form.Item label="Feedback">
-          <TextArea rows={4} onChange={e => setDescription(e.target.value)}/>
+          <TextArea rows={4} onChange={e => setDescription(e.target.value)} value={description}/>
         </Form.Item>
         <Form.Item label="Tipo de feedback">
-          <Select onChange={e => setType(e)}>
+          <Select onChange={e => setType(e)} >
             <Select.Option value="1">Normal</Select.Option>
             <Select.Option value="2">Contexto - Situação - Melhoria</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Quem receberá o feedback">
-          <Input onChange={e => setUserName(e.target.value)} />
+          <Input onChange={e => setUserName(e.target.value)} value={user_name}/>
         </Form.Item>
         <Form.Item>
-          <Button onSubmit = {console.log(id, description, type, user_name)}>Enviar</Button>
+          <Button onClick = {() => saveFeedback()} >Enviar</Button>
         </Form.Item>
       </Form>
     </>
